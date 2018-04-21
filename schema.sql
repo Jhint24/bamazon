@@ -1,6 +1,7 @@
-CREATE DATABASE bamazon;
+DROP DATABASE IF EXISTS bamazon;
+CREATE DATABASE bamazon_db;
 
-USE bamazon;
+USE bamazon_db;
 
 CREATE TABLE products	(
 item_id Integer NOT NULL auto_increment,
@@ -42,3 +43,5 @@ values ("scissors", "office", 6.99, 250);
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 values ("hdmi cable", "electronics", 19.99, 20);
+
+alter user 'root'@'localhost' identified by '12345'
