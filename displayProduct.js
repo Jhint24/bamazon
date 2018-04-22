@@ -20,7 +20,6 @@ function displayProducts()  {
     }     
             console.log(table.toString());
 
-            var inquirer = require('inquirer');
                 inquirer.prompt([
                     {
                     type: "input",
@@ -33,9 +32,38 @@ function displayProducts()  {
                     message: "How many would you like to purchase?"
                     }
                 ])
-                    .then(function(user)    {
+                    .then(function(answer)    {
+                        var chosenProduct;
+                        for (var i = 0; i < res[i].length; i++)  {
+                            if (res[i].item_id === answer.productId)    {
+                                chosenProduct = res[i];
+                            }
+                        
+                        var newQuantity = res[i].stock_quantity - chosenProduct.stock_quantity;
+                        if (chosenProduct.stock_quantity < res[i].stock_quantity)   {
+                            connection.query(
+                                "UPDATE products SET ? WHERE ?",
+                                [
+                                    {
+                                        stock_quantity: newQuantity
+                                    },
+                                    {
+                                        item_id: productId
+                                    }
+                                ],
+                                function(error) {
+                                    if (error) throw err;
+                                    console.log("Purchase Completed Successfully");
+                                }
+                            
+                            );
+                        }
+                            else {
+                                console.log("There is not enough of this product...")
+                            }
+                        }
                         //if (user.productQuantity <= res[i].stock_quantity)  {
-                    console.log(user.productQuantity + " " + user.productId + " purchased")
+                    // console.log(answer.productQuantity + " " + answer.productId + " purchased")
                         //}
                 });
 
