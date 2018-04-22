@@ -35,7 +35,7 @@ function displayProducts()  {
                 ])
                     .then(function(user)    {
                         //if (user.productQuantity <= res[i].stock_quantity)  {
-                    console.log(user.productQuantity + " " + user.productId.product_name + " purchased")
+                    console.log(user.productQuantity + " " + user.productId + " purchased")
                         //}
                 });
 
