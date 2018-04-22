@@ -1,4 +1,5 @@
 var connection = require("./connection");
+var inquirer = require('inquirer');
 var Table = require('cli-table');
 var table = new Table({
     head: ['ID', 'Product', 'Department', 'Price', 'Quantity']
@@ -12,28 +13,32 @@ function displayProducts()  {
         if (err)    {
             console.log(err);
         }
-        else    {
-
-            
-            //console.log(res);
-            // // for (var i = 0; i = res.length; i++)    {
-            //     console.log(res[i].item_id);
-            //     }       
+        else    {     
             var itemArray = [];
             for (var i = 0; i < res.length; i++) {
-            table.push([res[i].item_id, res[i].product_name,res[i].department_name, res[i].price, res[i].stock_quantity]);   
-            //   itemArray.push(res[i].item_id);                
-            //   itemArray.push(res[i].product_name);
-            //   itemArray.push(res[i].department_name);
-            //   itemArray.push(res[i].price);
-            //   itemArray.push(res[i].stock_quantity);
-            //  console.log(itemArray);
-
-
-
-            }     
+            table.push([res[i].item_id, res[i].product_name,res[i].department_name, res[i].price, res[i].stock_quantity]);
+    }     
             console.log(table.toString());
-            //console.log(itemArray);
+
+            var inquirer = require('inquirer');
+                inquirer.prompt([
+                    {
+                    type: "input",
+                    name: "productId",
+                    message: "Please input the Product ID you would like to purchase..."
+                    },
+                    {
+                    type: "input",
+                    name: "productQuantity",
+                    message: "How many would you like to purchase?"
+                    }
+                ])
+                    .then(function(user)    {
+                        //if (user.productQuantity <= res[i].stock_quantity)  {
+                    console.log(user.productQuantity + " " + user.productId.product_name + " purchased")
+                        //}
+                });
+
             connection.end();
         }
     })
