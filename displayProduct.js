@@ -61,7 +61,7 @@ function validateQuantity(trust) {
     }
 
         else {
-        console.log("getting there");
+        //console.log("getting there");
             updateTable(trust, res);
     }
       });
@@ -69,14 +69,18 @@ function validateQuantity(trust) {
 
 function updateTable(purchase, current)  {
     var newQuantity = (current[0].stock_quantity - purchase.productQuantity)
-    console.log(newQuantity); 
+    //console.log(newQuantity); 
 
     var query = "UPDATE products SET ? WHERE ?;";
     connection.query(query, [
         {stock_quantity: newQuantity},
         {item_id: purchase.productId}
-      ],
-    )
+      
+    ],function(err, res) {
+        var totalCost = (current[0].price * purchase.productQuantity);
+        console.log(totalCost);
+        console.log("Thank you for your purchase of " + purchase.productQuantity + " " + current[0].product_name + "(s). The Total Cost is " + totalCost);
+      });
     connection.end();  
 }
 
