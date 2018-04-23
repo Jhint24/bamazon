@@ -43,6 +43,7 @@ function displayProducts()  {
             else {
                 //validateQuantity();
                 console.log("valid id number")
+                validateQuantity(answer);
                 connection.end();  
             }
         })
@@ -51,15 +52,14 @@ function displayProducts()  {
 
 function validateQuantity(val) {
     var query = "SELECT item_id, product_name, price, stock_quantity FROM products WHERE ?;";
-    connection.query(query, { item_id: val.id }, function(err, res) {
+    connection.query(query, { item_id: val.productId }, function(err, res) {
         if (err) throw err;
     
         if (val.productQuantity > res[0].stock_quantity) {
           console.log("Please input a number at or below the current quantity");
-          buyProduct();
+
         }
-    
-        updateQuantity(val, res);
+        console.log("getting there");
       });
 }
 
