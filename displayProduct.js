@@ -78,8 +78,8 @@ function updateTable(purchase, current)  {
       
     ],function(err, res) {
         var totalCost = (current[0].price * purchase.productQuantity);
-        console.log(totalCost);
-        console.log("Thank you for your purchase of " + purchase.productQuantity + " " + current[0].product_name + "(s). The Total Cost is " + totalCost);
+        //console.log(totalCost);
+        console.log("Thank you for your purchase of " + purchase.productQuantity + " " + current[0].product_name + "(s). The Total Cost is $" + totalCost);
       });
     connection.end();  
 }
