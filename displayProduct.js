@@ -42,25 +42,42 @@ function displayProducts()  {
             }
             else {
                 //validateQuantity();
-                console.log("valid id number")
+                //console.log("valid id number")
                 validateQuantity(answer);
-                connection.end();  
+                // connection.end();  
             }
         })
     })
     }    
 
-function validateQuantity(val) {
+function validateQuantity(trust) {
     var query = "SELECT item_id, product_name, price, stock_quantity FROM products WHERE ?;";
-    connection.query(query, { item_id: val.productId }, function(err, res) {
+    connection.query(query, {item_id: trust.productId}, function(err, res) {
         if (err) throw err;
     
-        if (val.productQuantity > res[0].stock_quantity) {
+        else if (trust.productQuantity > res[0].stock_quantity) {
           console.log("Please input a number at or below the current quantity");
+          displayProducts();
+    }
 
-        }
+        else {
         console.log("getting there");
+            updateTable(trust, res);
+    }
       });
+}
+
+function updateTable(purchase, current)  {
+    var newQuantity = (current[0].stock_quantity - purchase.productQuantity)
+    console.log(newQuantity); 
+
+    var query = "UPDATE products SET ? WHERE ?;";
+    connection.query(query, [
+        {stock_quantity: newQuantity},
+        {item_id: purchase.productId}
+      ],
+    )
+    connection.end();  
 }
 
 
