@@ -38,7 +38,9 @@ function displayProducts()  {
         .then(function(answer)  {
             if (answer.productId >= res.length) {
                 console.log("Please input a correct Product ID");
-                displayProducts();
+                connection.end();
+                //displayProducts();
+
             }
             else {
                 //validateQuantity();
@@ -57,7 +59,8 @@ function validateQuantity(trust) {
     
         else if (trust.productQuantity > res[0].stock_quantity) {
           console.log("Please input a number at or below the current quantity");
-          displayProducts();
+          connection.end();
+          //displayProducts();
     }
 
         else {
